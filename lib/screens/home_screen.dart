@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../component/movie_card.dart';
+import 'package:filmes_com_api/component/movie_card.dart';
 import '../model/movieProvider.dart';
+import 'splash_screen.dart'; // Importa a SplashScreen
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   final String title;
 
   const MyHomePage({super.key, required this.title});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +17,30 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: const Color(0xFF0d0e0f),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(
-          child: Text(
-            widget.title,
-            style: const TextStyle(color: Color(0xFF53088c)),
-          ),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home, color: Colors.white),
+            onPressed: () {
+              // Navegar para a SplashScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SplashScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Buscar filme...',
                 hintStyle: const TextStyle(color: Colors.white54),
@@ -48,11 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               style: const TextStyle(color: Colors.white),
-              onSubmitted: (value) {
-                if (value.isNotEmpty) {
-                  movieProvider.fetchMovies(value);
-                }
-              },
             ),
           ),
           Expanded(
