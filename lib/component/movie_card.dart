@@ -26,27 +26,20 @@ class MovieCard extends StatelessWidget {
       child: Card(
         color: Colors.black54,
         margin: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Exibindo apenas a imagem do filme
-            Image.network(
-              movie.posterPath,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 8),
-            // Exibindo apenas o título do filme
-            Text(
-              movie.title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: SizedBox(
+          width: 150, // Define uma largura fixa
+          height: 300, // Altura aumentada para evitar cortes
+          child: Image.network(
+            movie.posterPath,
+            width: 150, // Ajusta a largura da imagem ao card
+            height: 400, // Altura ajustada
+            fit: BoxFit.cover, // Cobre o espaço proporcionalmente
+            errorBuilder: (context, error, stackTrace) => const Icon(
+              Icons.error,
+              color: Colors.red,
+              size: 50,
+            ), // Placeholder para erro na imagem
+          ),
         ),
       ),
     );

@@ -1,6 +1,5 @@
-import 'package:filmes_com_api/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import './model/movieProvider.dart';
+import 'model/movie_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:filmes_com_api/screens/splash_screen.dart'; // Importa a SplashScreen
 
