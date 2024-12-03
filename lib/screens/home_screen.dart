@@ -32,21 +32,38 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF0d0e0f),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-        ),
-        actions: [
-          if (movieProvider.isSearching)
-            IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () {
-                movieProvider.resetSearch(); // Reseta o estado de busca
+
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(78),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: AppBar(
+              elevation: 1,
+              shadowColor: Colors.grey[700],
+              leading: IconButton(onPressed: (){
+                Navigator.pushReplacementNamed(context, '/');
               },
+               icon: const Icon(Icons.arrow_back, color: Colors.white, size: 20,)),
+              backgroundColor: Colors.deepPurple,
+              title: Text(
+                title,
+                style: const TextStyle(color: Colors.white),
+              ),
+              centerTitle: true,
+              actions: [
+                if (movieProvider.isSearching)
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      movieProvider.resetSearch(); // Reseta o estado de busca
+                    },
+                  ),
+              ],
             ),
-        ],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../model/movie.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FilmeView extends StatelessWidget {
   final Movie movie;
@@ -10,11 +12,27 @@ class FilmeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0d0e0f),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(
-          movie.title,
-          style: const TextStyle(color: Colors.white),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(78),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: AppBar(
+              elevation: 1,
+              shadowColor: Colors.grey[700],
+              leading: IconButton(onPressed: (){
+                Navigator.pop(context);
+              },
+               icon: const Icon(Icons.arrow_back, color: Colors.white, size: 20,)),
+              backgroundColor: Colors.deepPurple,
+              title: Text(
+                movie.title,
+                style: const TextStyle(color: Colors.white),
+              ),
+              centerTitle: true,
+            ),
+          ),
         ),
       ),
       body: Padding(
@@ -39,11 +57,17 @@ class FilmeView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Text(
-              movie.overview,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
+            Center(
+              child: SizedBox(
+                width: 600,
+                child: Text(
+                  movie.overview,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
               ),
             ),
           ],

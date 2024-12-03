@@ -1,3 +1,4 @@
+import 'package:filmes_com_api/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'model/movie_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Catálogo de Filmes', // Novo título
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), // Cor principal
-        useMaterial3: true,
-      ),
-      home: const SplashScreen(), // Define a SplashScreen como tela inicial
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => const SplashScreen(),
+        '/home': (context) => const MyHomePage(title: 'CineFiner'),
+      },
     );
   }
 }

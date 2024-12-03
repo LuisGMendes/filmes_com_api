@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Catálogo de Filmes',
+              'CineFinder',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -32,12 +32,7 @@ class SplashScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navegar para a tela principal
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MyHomePage(title: 'Filmes com API'),
-                  ),
-                );
+                Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF53088c), // Cor do botão
