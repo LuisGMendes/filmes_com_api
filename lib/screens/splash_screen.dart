@@ -1,5 +1,5 @@
+// logo e texto finalizar
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Importe o arquivo da tela principal
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

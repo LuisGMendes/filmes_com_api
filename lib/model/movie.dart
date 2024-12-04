@@ -3,12 +3,16 @@ class Movie {
   final String posterPath;
   final String overview;
   final String releaseDate;
+  final double popularity;
+  final List<int> genreIds;
 
   Movie({
     required this.title,
     required this.posterPath,
     required this.overview,
     required this.releaseDate,
+    required this.popularity,
+    required this.genreIds,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
@@ -19,6 +23,8 @@ class Movie {
           : '',
       overview: json['overview'] ?? 'Sem sinopse',
       releaseDate: json['release_date'] ?? 'Sem data',
+      popularity: (json['popularity'] as num?)?.toDouble() ?? 0.0,
+      genreIds: List<int>.from(json['genre_ids'] ?? []),
     );
   }
 }

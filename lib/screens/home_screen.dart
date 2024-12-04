@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:filmes_com_api/component/movie_card.dart';
 import '../model/movie_provider.dart';
@@ -11,28 +12,21 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MovieProvider>(context);
+    final TextEditingController _searchController = TextEditingController();
 
-    // IDs dos gêneros e seus respectivos nomes
-    final genres = {
-      28: 'Ação',
-      35: 'Comédia',
-      18: 'Drama',
-      27: 'Terror',
-      10749: 'Romance',
-    };
-
-    // Busca inicial para preencher categorias
+    // Busca inicial para preencher categorias e gêneros
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!movieProvider.isSearching) {
-        genres.keys.forEach((genreId) {
-          movieProvider.fetchMoviesByGenre(genreId);
+      if (movieProvider.genres.isEmpty) {
+        movieProvider.fetchGenres().then((_) {
+          movieProvider.genres.keys.forEach((genreId) {
+            movieProvider.fetchMoviesByGenre(genreId);
+          });
         });
       }
     });
 
     return Scaffold(
       backgroundColor: const Color(0xFF0d0e0f),
-
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(78),
         child: Padding(
@@ -42,14 +36,20 @@ class MyHomePage extends StatelessWidget {
             child: AppBar(
               elevation: 1,
               shadowColor: Colors.grey[700],
-              leading: IconButton(onPressed: (){
-                Navigator.pushReplacementNamed(context, '/');
-              },
-               icon: const Icon(Icons.arrow_back, color: Colors.white, size: 20,)),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 32),
+              ),
               backgroundColor: Colors.deepPurple,
+              titleTextStyle: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+              ), 
               title: Text(
                 title,
-                style: const TextStyle(color: Colors.white),
               ),
               centerTitle: true,
               actions: [
@@ -57,7 +57,8 @@ class MyHomePage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
-                      movieProvider.resetSearch(); // Reseta o estado de busca
+                      _searchController.clear();
+                      movieProvider.resetSearch();
                     },
                   ),
               ],
@@ -71,6 +72,7 @@ class MyHomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                controller: _searchController,
                 onSubmitted: (value) {
                   if (value.isNotEmpty) {
                     movieProvider.fetchMovies(value);
@@ -91,7 +93,6 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             if (movieProvider.isSearching)
-              // Mostra resultados da pesquisa
               movieProvider.movies.isEmpty
                   ? const Center(
                       child: Text(
@@ -117,25 +118,49 @@ class MyHomePage extends StatelessWidget {
                       ),
                     )
             else
-              // Mostra categorias se não estiver no modo de busca
-              ...genres.entries.map((entry) {
+              ...movieProvider.genres.entries.map((entry) {
                 final genreId = entry.key;
                 final genreName = entry.value;
                 final movies = movieProvider.moviesByGenre[genreId] ?? [];
 
                 return movies.isEmpty
-                    ? const SizedBox() // Evita mostrar se a lista estiver vazia
+                    ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              genreName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: 200,
+                                height: 46,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepPurple,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 2
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.blue.withOpacity(0.5), // Cor da sombra
+                                      blurRadius: 8, // Desfoque da sombra
+                                      offset: const Offset(5, 4), // Deslocamento da sombra (x, y)
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    genreName,
+                                    style: GoogleFonts.domine(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
