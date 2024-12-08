@@ -1,5 +1,6 @@
 // logo e texto finalizar
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,19 +16,39 @@ class SplashScreen extends StatelessWidget {
             // Logo ou imagem do app (opcional, pode substituir por outra imagem)
             const Icon(
               Icons.movie_creation_outlined,
-              size: 100,
+              size: 230,
               color: Colors.white,
             ),
             const SizedBox(height: 20),
-            const Text(
-              'CineFinder',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
+            RichText(
+  text: TextSpan(
+    style: const TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    children: [
+      const TextSpan(text: 'Cine'),
+      TextSpan(
+        text: 'F',
+        style: GoogleFonts.poppins(
+          color: Colors.purple,
+          fontWeight: FontWeight.w900,
+          fontSize: 58,
+          shadows: [
+            const Shadow(
+              offset: Offset(2, 2),
+              blurRadius: 2,
+              color: Colors.white,
             ),
+          ],
+        ),
+      ),
+      const TextSpan(text: 'inder'),
+    ],
+  ),
+  textAlign: TextAlign.center,
+),
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {

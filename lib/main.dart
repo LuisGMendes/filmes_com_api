@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => const SplashScreen(),
-        '/home': (context) => const MyHomePage(title: 'CineFiner'),
+        '/home': (context) => const MyHomePage(title: 'CineFinder'),
       },
     );
   }
